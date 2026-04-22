@@ -212,5 +212,83 @@ map.on('draw:created', function(e) {
 
 	drawnItems.addLayer(layer);
 });
+
+//Points Layer
+
+var points = L.geoJSON(null, {
+    onEachFeature: function(feature, layer) {
+        var popup_content = "Nama: " + feature.properties.name + "<br>" +
+            "Deskripsi: " + feature.properties.description + "<br>" +
+            "Dibuat: " + feature.properties.created_at;
+
+        layer.on({
+            click: function (e) {
+                layer.bindPopup(popup_content).openPopup();
+            }
+        });
+    }
+});
+
+// ✅ letakkan di luar
+$.getJSON("{{ route('geojson.points')}}", function (data) {
+    points.addData(data);
+    map.addLayer(points);
+});
+//Polylines Layer
+
+var polylines = L.geoJSON(null, {
+    onEachFeature: function(feature, layer) {
+        var popup_content = "Nama: " + feature.properties.name + "<br>" +
+            "Deskripsi: " + feature.properties.description + "<br>" +
+            "Dibuat: " + feature.properties.created_at;
+
+        layer.on({
+            click: function (e) {
+                layer.bindPopup(popup_content).openPopup();
+            }
+        });
+    }
+});
+
+// ✅ letakkan di luar
+$.getJSON("{{ route('geojson.polylines')}}", function (data) {
+    polylines.addData(data);
+    map.addLayer(polylines);
+});
+//Polygons Layer
+
+var polygons = L.geoJSON(null, {
+    onEachFeature: function(feature, layer) {
+        var popup_content = "Nama: " + feature.properties.name + "<br>" +
+            "Deskripsi: " + feature.properties.description + "<br>" +
+            "Dibuat: " + feature.properties.created_at;
+
+        layer.on({
+            click: function (e) {
+                layer.bindPopup(popup_content).openPopup();
+            }
+        });
+    }
+});
+
+// ✅ letakkan di luar
+$.getJSON("{{ route('geojson.polygons')}}", function (data) {
+    polygons.addData(data);
+    map.addLayer(polygons);
+});
+
+// Control Layer
+var baseMaps = {
+
+};
+
+var overlayMaps = {
+	"Points": points,
+	"Polylines": polylines,
+	"Polygons": polygons,
+};
+
+var controllayer = L.control.layers(baseMaps, overlayMaps);
+controllayer.addTo(map);
 </script>
 @endsection
