@@ -112,6 +112,17 @@ class PointsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $image = $this->points->find($id)->image;
+
+        if (!$this->points->destroy($id)) {
+            return redirect()->route('peta') ->with('error', 'Gagal menghapus data point.');
+        }
+
+        if ($image != null) {
+            if (file_exists('storage/images/' . $image)) {
+                unlink('storage/images/' . $image);
+            }
+        }
+        return redirect()->route('peta') ->with('success', 'Data point berhasil dihapus.');
     }
 }

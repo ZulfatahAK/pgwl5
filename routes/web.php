@@ -14,10 +14,16 @@ Route::get('/tabel', [PageController::class, 'tabel'])->name('tabel');
 
 Route::post('/points', [PointsController::class, 'store'])
 ->name('points.store');
+Route::delete('/delete-points/{id}', [PointsController::class, 'destroy'])
+->name('points.delete');
 Route::post('/polylines', [PolylinesController::class, 'store'])
 ->name('polylines.store');
+Route::delete('/delete-polylines/{id}', [PolylinesController::class, 'destroy'])
+->name('polylines.delete');
 Route::post('/polygons', [PolygonsController::class, 'store'])
 ->name('polygons.store');
+Route::delete('/delete-polygons/{id}', [PolygonsController::class, 'destroy'])
+->name('polygons.delete');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

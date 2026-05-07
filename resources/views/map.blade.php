@@ -246,12 +246,23 @@ map.on('draw:created', function(e) {
 //Points Layer
 
 var points = L.geoJSON(null, {
-    onEachFeature: function(feature, layer) {w
-        var popup_content = "Nama: " + feature.properties.name + "<br>" +
-            "Deskripsi: " + feature.properties.description + "<br>" +
-            "Dibuat: " + feature.properties.created_at
-            + "<br>" + "<img src='{{asset('storage/images')}}/" + feature.properties.image + "'alt='' class='img-thumbnail' width='400'>" ;
+    onEachFeature: function(feature, layer) {
+        var routedelete = "{{route('points.delete', ':id')}}";
+        routedelete = routedelete.replace(':id', feature.properties.id);
+        var csrf = "{{ csrf_token() }}";
 
+var popup_content =
+    "Nama: " + feature.properties.name + "<br>" +
+    "Deskripsi: " + feature.properties.description + "<br>" +
+    "Dibuat: " + feature.properties.created_at + "<br>" +
+    "<img src='{{asset('storage/images')}}/" + feature.properties.image +
+    "' class='img-thumbnail' width='400'><br><br>" +
+
+    "<form action='"+ routedelete +"' method='POST' onsubmit='return confirm(\"Yakin ?\")'>" +
+    "<input type='hidden' name='_token' value='"+ csrf +"'>" +
+    "<input type='hidden' name='_method' value='DELETE'>" +
+    "<button class='btn btn-sm btn-danger'>Delete</button>" +
+    "</form>";
         layer.on({
             click: function (e) {
                 layer.bindPopup(popup_content).openPopup();
@@ -268,12 +279,23 @@ $.getJSON("{{ route('geojson.points')}}", function (data) {
 //Polylines Layer
 
 var polylines = L.geoJSON(null, {
-    onEachFeature: function(feature, layer) {
-        var popup_content = "Nama: " + feature.properties.name + "<br>" +
-            "Deskripsi: " + feature.properties.description + "<br>" +
-            "Dibuat: " + feature.properties.created_at
-            + "<br>" + "<img src='{{asset('storage/images')}}/" + feature.properties.image + "'alt='' class='img-thumbnail' width='400'>";
+        onEachFeature: function(feature, layer) {
 
+    var routedelete = "{{route('polylines.delete', ':id')}}";
+        routedelete = routedelete.replace(':id', feature.properties.id);
+        var csrf = "{{ csrf_token() }}";
+
+        var popup_content =
+    "Nama: " + feature.properties.name + "<br>" +
+    "Deskripsi: " + feature.properties.description + "<br>" +
+    "Dibuat: " + feature.properties.created_at + "<br>" +
+    "<img src='{{asset('storage/images')}}/" + feature.properties.image + "' class='img-thumbnail' width='400'><br><br>" +
+
+    "<form action='"+ routedelete +"' method='POST' onsubmit='return confirm(\"Yakin?\")'>" +
+    "<input type='hidden' name='_token' value='"+ csrf +"'>" +
+    "<input type='hidden' name='_method' value='DELETE'>" +
+    "<button class='btn btn-sm btn-danger'>Delete</button>" +
+    "</form>";
         layer.on({
             click: function (e) {
                 layer.bindPopup(popup_content).openPopup();
@@ -290,12 +312,24 @@ $.getJSON("{{ route('geojson.polylines')}}", function (data) {
 //Polygons Layer
 
 var polygons = L.geoJSON(null, {
-    onEachFeature: function(feature, layer) {
-        var popup_content = "Nama: " + feature.properties.name + "<br>" +
-            "Deskripsi: " + feature.properties.description + "<br>" +
-            "Dibuat: " + feature.properties.created_at
-            + "<br>" + "<img src='{{asset('storage/images')}}/" + feature.properties.image + "'alt='' class='img-thumbnail' width='400'>";
 
+    onEachFeature: function(feature, layer) {
+        var routedelete = "{{route('polygons.delete', ':id')}}";
+        routedelete = routedelete.replace(':id', feature.properties.id);
+        var csrf = "{{ csrf_token() }}";
+
+        var popup_content =
+    "Nama: " + feature.properties.name + "<br>" +
+    "Deskripsi: " + feature.properties.description + "<br>" +
+    "Dibuat: " + feature.properties.created_at + "<br>" +
+    "<img src='{{asset('storage/images')}}/" + feature.properties.image + "' class='img-thumbnail' width='400'><br><br>" +
+
+    "<form action='"+ routedelete +"
+    ' method='POST' onsubmit='return confirm(\"Yakin?\")'>" +
+    "<input type='hidden' name='_token' value='"+ csrf +"'>" +
+    "<input type='hidden' name='_method' value='DELETE'>" +
+    "<button class='btn btn-sm btn-danger'>Delete</button>" +
+    "</form>";
         layer.on({
             click: function (e) {
                 layer.bindPopup(popup_content).openPopup();
